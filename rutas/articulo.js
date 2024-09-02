@@ -29,6 +29,7 @@ router.get("/articulo/:id",ArticuloControlador.uno);
 router.delete("/borrar/:id",ArticuloControlador.borrar);
 router.put("/actualizar/:id",ArticuloControlador.editar);
 router.post("/subir-imagen/:id", subidas.single("file0"),ArticuloControlador.subir);
+router.get("/buscar/:busqueda",ArticuloControlador.buscador);
 
 
 module.exports = router;

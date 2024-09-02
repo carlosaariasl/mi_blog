@@ -238,6 +238,39 @@ const subir = async (req, res) => {
     }
 };
 
+const buscador = (req, res) => {
+    // Sacar el string de búsqueda
+    let busqueda = req.params.busqueda;
+
+    // Ejecutar la consulta con promesas
+    Articulo.find({ 
+        "$or": [
+            { "titulo": { "$regex": busqueda, "$options": "i" } },
+            { "contenido": { "$regex": busqueda, "$options": "i" } }
+        ]
+    })
+    .sort({ fecha: -1 })
+    .exec()
+    .then(articulosEncontrados => {
+        if (!articulosEncontrados || articulosEncontrados.length === 0) {
+            return res.status(404).json({
+                status: "error",
+                mensaje: "No se han encontrado artículos"
+            });
+        }
+        return res.status(200).json({
+            status: "success",
+            articulos: articulosEncontrados
+        });
+    })
+    .catch(error => {
+        return res.status(500).json({
+            status: "error",
+            mensaje: "Error en la consulta",
+            error: error.message
+        });
+    });
+};
 
 
 module.exports = {
@@ -248,5 +281,6 @@ module.exports = {
     uno,
     borrar,
     editar,
-    subir
+    subir,
+    buscador
 }
