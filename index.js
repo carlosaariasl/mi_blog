@@ -15,7 +15,7 @@ app.use(cors());
 
 //Convertir body a objeto js
 app.use(express.json());  //Recibir datos con content-type app/json
-app.use(express.urlencoded({extend:true}));
+app.use(express.urlencoded({extended: true}));
 
 const rutas_articulo = require("./rutas/articulo");
 
